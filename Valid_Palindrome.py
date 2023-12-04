@@ -1,3 +1,5 @@
+# Primitve approach I used in September
+
 class Solution(object):
     def isPalindrome(self, s):
         """
@@ -16,3 +18,29 @@ class Solution(object):
             if(fin[i]!=fin[n-i-1]):
                 return False
         return True
+
+# Improved approach 
+
+class Solution(object):
+    def isPalindrome(self, s):
+        """
+        :type s: str
+        :rtype: bool
+        """
+        i=0
+        j=len(s)-1
+        while(i<j):
+            if not s[i].isalnum():
+                i+=1
+            elif not s[j].isalnum():
+                j-=1
+            elif s[i].lower()==s[j].lower() :
+                i+=1
+                j-=1
+            else:
+                return False
+        return True
+
+
+
+
