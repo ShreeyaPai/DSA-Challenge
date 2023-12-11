@@ -41,3 +41,24 @@ class Solution(object):
             else:
                 output.append(without_zero)
         return output
+
+######################### WITHOUT EXTRA SPACE ###############################3
+class Solution(object):
+    def productExceptSelf(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[int]
+        """
+        ans=[1]*len(nums)
+        prefix=1
+        for i in range(len(nums)):
+            ans[i]=prefix
+            prefix*=nums[i]
+        print(ans)
+        post=1
+        for i in range(len(nums)-1,-1,-1):
+            ans[i]*=post
+            post*=nums[i]
+        return ans
+
+        
