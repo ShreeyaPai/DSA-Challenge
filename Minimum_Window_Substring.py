@@ -1,31 +1,37 @@
-class Solution:
-    def minWindow(self, s: str, t: str) -> str:
-        if not s or not t or len(s) < len(t):
-            return ""
+class Solution(object):
+    def minWindow(self, s, t):
+        """
+        :type s: str
+        :type t: str
+        :rtype: str
+        """
+        if t=="": return ""
 
-        map = [0] * 128
-        count = len(t)
-        start = 0
-        end = 0
-        min_len = float('inf')
-        start_index = 0
-        for char in t:
-            map[ord(char)] += 1
+        window,countT={},{}
+        for c in t:
+            countT[c]=1+countT.get(c,0)
+        #print(countT)
 
-        while end < len(s):
-            if map[ord(s[end])] > 0:
-                count -= 1
-            map[ord(s[end])] -= 1
-            end += 1
+        need,have=len(countT),0
+        l=0
+        res,resLen=[-1,-1],float('inf')
+        for r in range(len(s)):
+            window[s[r]]=1+window.get(s[r],0)
 
-            while count == 0:
-                if end - start < min_len:
-                    start_index = start
-                    min_len = end - start
-
-                if map[ord(s[start])] == 0:
-                    count += 1
-                map[ord(s[start])] += 1
-                start += 1
-
-        return "" if min_len == float('inf') else s[start_index:start_index + min_len]
+            if s[r] in countT and window[s[r]]==countT[s[r]]:
+                have+=1
+            #print(have)
+            while need==have:
+                #Update result
+                if (r-l+1) < resLen:
+                    resLen=r-l+1
+                    res=[l,r]
+                #Minimize window
+                window[s[l]]-=1
+                if s[l] in countT and window[s[l]]<countT[s[l]]:
+                    have-=1
+                l+=1
+        #print(res)
+        l,r=res
+        if resLen==float('inf'): return ""
+        else: return s[l:r+1]
