@@ -11,8 +11,8 @@ class Solution(object):
         :type subRoot: TreeNode
         :rtype: bool
         """
-        if not t:return True
-        if not s:return False
+        if not t:return True #s is not empty but t is empty
+        if not s:return False #t is not empty (checked w first condn) but s is empty
 
         if self.isSame(s,t):return True
         return self.isSubtree(s.left,t) or self.isSubtree(s.right,t)
@@ -21,7 +21,4 @@ class Solution(object):
         if not t and not s: return True
         if s and t and t.val==s.val:
             return (self.isSame(s.left,t.left) and self.isSame(s.right,t.right))
-        return False
-
-        #return isSame(t,s) and isSame(t.right,s.right) and isSame(t.left,s.left)
-    #print(isSame(root,subRoot))
+        return False #One is empty one is non empty case
